@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserRepositoryImplement } from './user.repository';
+import { UserRepository } from './user.repository';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
@@ -10,11 +10,11 @@ import { UserEntity } from './user.entity';
   controllers: [UserController],
   providers: [
     UserService,
-    UserRepositoryImplement,
+    UserRepository,
     {
       provide: UserService,
-      useFactory: (repo: UserRepositoryImplement) => new UserService(repo),
-      inject: [UserRepositoryImplement],
+      useFactory: (repo: UserRepository) => new UserService(repo),
+      inject: [UserRepository],
     },
   ],
 })

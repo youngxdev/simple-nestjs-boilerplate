@@ -1,17 +1,17 @@
-import { Controller, Post, Get, Param, Body, Res } from '@nestjs/common';
-import { User } from './domain/user';
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserEntity } from './user.entity';
 
 @Controller({
-    path: 'users',
-    version: '1'
+    path: 'users'
 })
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Post()
-    async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.userService.create(createUserDto);
+    @HttpCode(HttpStatus.CREATED)
+    async create(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
+    return await this.userService.create(createUserDto);
     }
 }
